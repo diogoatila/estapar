@@ -2,8 +2,7 @@
 using Estapar.Application.Garage;
 using Estapar.Application.Revenue;
 using Estapar.Application.Webhook;
-using Estapar.Infrastructure.Clients;
-using Estapar.Infrastructure.HostedServices;
+using Estapar.Infrastructure.Bootstrap;
 using Estapar.Infrastructure.Persistence;
 using Estapar.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
@@ -14,19 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddHostedService<GarageBootstrapHostedService>();
 builder.Services.AddTransient<ExceptionHandlingMiddleware>();
-
-builder.Services.AddHttpClient<IGarageClient, GarageClient>(client =>
-{
-    var baseUrl = builder.Configuration["GarageSimulator:BaseUrl"];
-
-    if (string.IsNullOrWhiteSpace(baseUrl))
-        throw new InvalidOperationException("GarageSimulator:BaseUrl is not configured.");
-
-    client.BaseAddress = new Uri(baseUrl);
-    client.Timeout = TimeSpan.FromSeconds(15);
-});
+builder.Services.AddHostedService<GarageSeedHostedService>();
 
 //Services
 builder.Services.AddScoped<IWebhookService, WebhookService>();
