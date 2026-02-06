@@ -72,7 +72,7 @@ public sealed class GarageBootstrapHostedService : BackgroundService
 
             if (existingSector is null)
             {
-                db.Sectors.Add(new GarageSector(code, sectorDto.BasePrice, sectorDto.MaxCapacity));
+                db.Sectors.Add(new GarageSector(code, sectorDto.BasePrice, sectorDto.Max_Capacity));
             }
             else
             {
@@ -80,7 +80,7 @@ public sealed class GarageBootstrapHostedService : BackgroundService
                 // Para manter simples no teste, você pode trocar para setters internos,
                 // OU criar métodos no domínio. Vou te mostrar o jeito sênior:
 
-                UpdateSector(existingSector, sectorDto.BasePrice, sectorDto.MaxCapacity);
+                UpdateSector(existingSector, sectorDto.BasePrice, sectorDto.Max_Capacity);
             }
         }
 

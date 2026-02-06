@@ -1,5 +1,6 @@
 ﻿using Estapar.Api.Middlewares;
 using Estapar.Application.Garage;
+using Estapar.Application.Revenue;
 using Estapar.Application.Webhook;
 using Estapar.Infrastructure.Clients;
 using Estapar.Infrastructure.HostedServices;
@@ -29,6 +30,8 @@ builder.Services.AddHttpClient<IGarageClient, GarageClient>(client =>
 
 //Services
 builder.Services.AddScoped<IWebhookService, WebhookService>();
+builder.Services.AddScoped<IRevenueService, RevenueService>();
+builder.Services.AddScoped<IGarageQueryService, GarageQueryService>();
 
 
 // DbContext

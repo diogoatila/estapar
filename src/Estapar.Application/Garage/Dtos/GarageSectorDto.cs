@@ -11,5 +11,5 @@ public sealed class GarageSectorDto
     public decimal BasePrice { get; set; }
 
     [JsonPropertyName("max_capacity")]
-    public int MaxCapacity { get; set; }
+    public int Max_Capacity { get; set; }
 }
