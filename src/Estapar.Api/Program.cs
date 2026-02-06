@@ -1,16 +1,21 @@
-﻿using Estapar.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
+﻿using Estapar.Api.Middlewares;
 using Estapar.Application.Garage;
+using Estapar.Application.Webhook;
 using Estapar.Infrastructure.Clients;
 using Estapar.Infrastructure.HostedServices;
+using Estapar.Infrastructure.Persistence;
+using Estapar.Infrastructure.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//Services
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHostedService<GarageBootstrapHostedService>();
+builder.Services.AddTransient<ExceptionHandlingMiddleware>();
+
 builder.Services.AddHttpClient<IGarageClient, GarageClient>(client =>
 {
     var baseUrl = builder.Configuration["GarageSimulator:BaseUrl"];
@@ -21,6 +26,9 @@ builder.Services.AddHttpClient<IGarageClient, GarageClient>(client =>
     client.BaseAddress = new Uri(baseUrl);
     client.Timeout = TimeSpan.FromSeconds(15);
 });
+
+//Services
+builder.Services.AddScoped<IWebhookService, WebhookService>();
 
 
 // DbContext
@@ -38,6 +46,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 app.MapControllers();
 
