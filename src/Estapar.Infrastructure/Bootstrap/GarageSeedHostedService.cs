@@ -49,15 +49,15 @@ public sealed class GarageSeedHostedService : BackgroundService
 
             //  SPOTS A (1..5) 
             for (int i = 1; i <= 5; i++)
-                db.Spots.Add(new Spot(i, "A", -23.561684m, -46.655981m));
+                db.Spots.Add(new Spot(i, "A", -27.561655m, -48.655956m));
 
             //  SPOTS B (6..10) 
             for (int i = 6; i <= 10; i++)
-                db.Spots.Add(new Spot(i, "B", -23.561684m, -46.655981m));
+                db.Spots.Add(new Spot(i, "B", -28.561667m, -49.655983m));
 
             // SPOTS C (11..15) 
             for (int i = 11; i <= 15; i++)
-                db.Spots.Add(new Spot(i, "C", -23.561684m, -46.655981m));
+                db.Spots.Add(new Spot(i, "C", -29.561684m, -46.655981m));
             await db.SaveChangesAsync(stoppingToken);
 
             _logger.LogInformation("Garage seed completed successfully.");
