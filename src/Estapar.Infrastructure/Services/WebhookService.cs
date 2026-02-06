@@ -98,7 +98,7 @@ public sealed class WebhookService : IWebhookService
             var occupied = await _db.Spots.CountAsync(x => x.SectorCode == sector.SectorCode && x.IsOccupied, ct);
 
             if (occupied >= capacity)
-                continue; // setor cheio
+                continue; // setor cheio, bloquei novas entradas
 
             // lotação ANTES de ocupar
             var occupancyRate = (decimal)occupied / capacity;
@@ -151,7 +151,7 @@ public sealed class WebhookService : IWebhookService
 
         activeSession.MarkParked();
 
-        // lat/lng são opcionais. Você pode ignorar.
+
         // Se quiser atualizar a vaga com a última posição:
         if (lat is not null && lng is not null)
         {

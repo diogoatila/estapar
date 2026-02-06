@@ -42,27 +42,22 @@ public sealed class GarageSeedHostedService : BackgroundService
 
             _logger.LogInformation("Seeding garage initial data...");
 
-            // --- SECTOR A ---
-            var sectorA = new GarageSector(
-                sectorCode: "A",
-                basePrice: 10m,
-                maxCapacity: 100
-            );
+            //  SECTORS 
+            db.Sectors.Add(new GarageSector("A", 10m, 5));
+            db.Sectors.Add(new GarageSector("B", 12m, 5));
+            db.Sectors.Add(new GarageSector("C", 15m, 5));
 
-            db.Sectors.Add(sectorA);
+            //  SPOTS A (1..5) 
+            for (int i = 1; i <= 5; i++)
+                db.Spots.Add(new Spot(i, "A", -23.561684m, -46.655981m));
 
-            // --- SPOTS 1..100 ---
-            // lat/lng podem ser fixos (não influenciam a regra de negócio)
-            for (int i = 1; i <= 100; i++)
-            {
-                db.Spots.Add(new Spot(
-                    id: i,
-                    sectorCode: "A",
-                    lat: -23.561684m,
-                    lng: -46.655981m
-                ));
-            }
+            //  SPOTS B (6..10) 
+            for (int i = 6; i <= 10; i++)
+                db.Spots.Add(new Spot(i, "B", -23.561684m, -46.655981m));
 
+            // SPOTS C (11..15) 
+            for (int i = 11; i <= 15; i++)
+                db.Spots.Add(new Spot(i, "C", -23.561684m, -46.655981m));
             await db.SaveChangesAsync(stoppingToken);
 
             _logger.LogInformation("Garage seed completed successfully.");

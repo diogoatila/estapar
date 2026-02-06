@@ -33,5 +33,15 @@ public sealed class ExceptionHandlingMiddleware : IMiddleware
                 error = ex.Message
             }));
         }
+        catch (Exception)
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            context.Response.ContentType = "application/json";
+
+            await context.Response.WriteAsync(JsonSerializer.Serialize(new
+            {
+                error = "Unexpected error."
+            }));
+        }
     }
 }
