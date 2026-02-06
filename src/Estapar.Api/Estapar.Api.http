@@ -1,0 +1,6 @@
+@Estapar.Api_HostAddress = http://localhost:5272
+
+GET {{Estapar.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
