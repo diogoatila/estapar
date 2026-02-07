@@ -50,6 +50,7 @@ Backend em **.NET 8** para gerenciamento de estacionamento, com controle de vaga
 
 ### Middleware de exceção
 - Captura qualquer tipo de exceção no contexto, trata e retorna payload válido ao frontend, previnindo qualquer tipo de crash na aplicação.
+- Validação no domínio para entrada de valores inválidos.
 
 ### Idempotência
 - ENTRY duplicado para a mesma placa não cria nova sessão.
