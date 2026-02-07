@@ -9,13 +9,17 @@ public sealed class Spot
     public bool IsOccupied { get; private set; }
 
     private Spot() { } // EF
-
     public Spot(int id, string sectorCode, decimal lat, decimal lng)
     {
+        if (id <= 0)
+            throw new ArgumentOutOfRangeException(nameof(id), "Id deve ser maior que zero.");
+
         Id = id;
-        SectorCode = sectorCode.Trim().ToUpperInvariant();
+        SectorCode = NormalizeSectorCode(sectorCode);
+
         Lat = lat;
         Lng = lng;
+
         IsOccupied = false;
     }
 
@@ -26,6 +30,13 @@ public sealed class Spot
         SectorCode = sectorCode.Trim().ToUpperInvariant();
         Lat = lat;
         Lng = lng;
+    }
+    private static string NormalizeSectorCode(string sectorCode)
+    {
+        if (string.IsNullOrWhiteSpace(sectorCode))
+            throw new ArgumentException("SectorCode não pode ser vazio.", nameof(sectorCode));
+
+        return sectorCode.Trim().ToUpperInvariant();
     }
 }
 

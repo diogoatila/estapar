@@ -179,7 +179,7 @@ public sealed class WebhookService : IWebhookService
         if (activeSession is null)
         {
             await tx.CommitAsync(ct);
-            return; // idempotente
+            throw new InvalidOperationException("Não existe sessão ativa para essa placa.");
         }
 
         // libera spot
