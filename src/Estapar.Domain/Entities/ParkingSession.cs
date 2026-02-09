@@ -34,10 +34,10 @@ public sealed class ParkingSession
         SectorCode = NormalizeSectorCode(sectorCode);
 
         if (spotId <= 0)
-            throw new ArgumentOutOfRangeException(nameof(spotId), "SpotId deve ser maior que zero.");
+            throw new ArgumentOutOfRangeException(nameof(spotId), "SpotId must be greater than zero.");
 
         if (pricePerHourApplied < 0)
-            throw new ArgumentOutOfRangeException(nameof(pricePerHourApplied), "PricePerHourApplied não pode ser negativo.");
+            throw new ArgumentOutOfRangeException(nameof(pricePerHourApplied), "PricePerHourApplied cannot be negative.");
 
         SpotId = spotId;
 
@@ -56,7 +56,7 @@ public sealed class ParkingSession
             return; // idempotente
 
         if (Status != ParkingStatus.Entered)
-            throw new InvalidOperationException($"Não é possível marcar como Parked quando o status é {Status}.");
+            throw new InvalidOperationException($"It is not possible to mark it as Parked when the status is {Status}.");
 
         Status = ParkingStatus.Parked;
     }
@@ -70,12 +70,12 @@ public sealed class ParkingSession
             return;
 
         if (amountCharged < 0)
-            throw new ArgumentOutOfRangeException(nameof(amountCharged), "AmountCharged não pode ser negativo.");
+            throw new ArgumentOutOfRangeException(nameof(amountCharged), "AmountCharged cannot be negative.");
 
         var exitUtc = EnsureUtc(exitTime);
 
         if (exitUtc < EntryTime)
-            throw new InvalidOperationException("ExitTime não pode ser menor que EntryTime.");
+            throw new InvalidOperationException("ExitTime cannot be less than EntryTime.");
 
         ExitTime = exitUtc;
         AmountCharged = amountCharged;
@@ -85,12 +85,12 @@ public sealed class ParkingSession
     private static string NormalizePlate(string plate)
     {
         if (string.IsNullOrWhiteSpace(plate))
-            throw new ArgumentException("LicensePlate não pode ser vazia.", nameof(plate));
+            throw new ArgumentException("LicensePlate cannot be empty.", nameof(plate));
 
         plate = plate.Trim().ToUpperInvariant().Replace(" ", "");
 
         if (plate.Length < 7 || plate.Length > 8)
-            throw new ArgumentException("LicensePlate inválida.", nameof(plate));
+            throw new ArgumentException("Invalid LicensePlate.", nameof(plate));
 
         return plate;
     }
@@ -98,7 +98,7 @@ public sealed class ParkingSession
     private static string NormalizeSectorCode(string sectorCode)
     {
         if (string.IsNullOrWhiteSpace(sectorCode))
-            throw new ArgumentException("SectorCode não pode ser vazio.", nameof(sectorCode));
+            throw new ArgumentException("SectorCode cannot be empty.", nameof(sectorCode));
 
         return sectorCode.Trim().ToUpperInvariant();
     }
@@ -110,8 +110,8 @@ public sealed class ParkingSession
             DateTimeKind.Utc => dt,
             DateTimeKind.Local => dt.ToUniversalTime(),
             DateTimeKind.Unspecified => throw new ArgumentException(
-                "Data/hora precisa estar em UTC (ex: 2025-01-01T12:00:00.000Z)."),
-            _ => throw new ArgumentException("DateTime inválido.")
+                "Date/time must be in UTC. (ex: 2025-01-01T12:00:00.000Z)."),
+            _ => throw new ArgumentException("Invalid DateTime.")
         };
     }
 }

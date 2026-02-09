@@ -12,7 +12,7 @@ public sealed class Spot
     public Spot(int id, string sectorCode, decimal lat, decimal lng)
     {
         if (id <= 0)
-            throw new ArgumentOutOfRangeException(nameof(id), "Id deve ser maior que zero.");
+            throw new ArgumentOutOfRangeException(nameof(id), "Id must be greater than zero.");
 
         Id = id;
         SectorCode = NormalizeSectorCode(sectorCode);
@@ -34,7 +34,7 @@ public sealed class Spot
     private static string NormalizeSectorCode(string sectorCode)
     {
         if (string.IsNullOrWhiteSpace(sectorCode))
-            throw new ArgumentException("SectorCode não pode ser vazio.", nameof(sectorCode));
+            throw new ArgumentException("SectorCode cannot be empty.", nameof(sectorCode));
 
         return sectorCode.Trim().ToUpperInvariant();
     }

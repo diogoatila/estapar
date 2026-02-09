@@ -29,7 +29,7 @@ public sealed class GarageSector
     private static string NormalizeSectorCode(string sectorCode)
     {
         if (string.IsNullOrWhiteSpace(sectorCode))
-            throw new ArgumentException("SectorCode não pode ser vazio.", nameof(sectorCode));
+            throw new ArgumentException("SectorCode cannot be empty.", nameof(sectorCode));
 
         return sectorCode.Trim().ToUpperInvariant();
     }
@@ -37,9 +37,9 @@ public sealed class GarageSector
     private static void Validate(decimal basePrice, int maxCapacity)
     {
         if (basePrice < 0)
-            throw new ArgumentOutOfRangeException(nameof(basePrice), "BasePrice não pode ser negativo.");
+            throw new ArgumentOutOfRangeException(nameof(basePrice), "BasePrice cannot be negative.");
 
         if (maxCapacity <= 0)
-            throw new ArgumentOutOfRangeException(nameof(maxCapacity), "MaxCapacity deve ser maior que zero.");
+            throw new ArgumentOutOfRangeException(nameof(maxCapacity), "MaxCapacity must be greater than zero.");
     }
 }
